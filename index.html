@@ -34,7 +34,7 @@ a{color:inherit} button{font:inherit;color:inherit;background:none;border:0;curs
 .world svg,#fw{position:absolute;left:0;top:0;width:100%;height:100%}
 #blooms{height:32%!important}
 #milky{position:absolute;inset:-20%;background:linear-gradient(118deg,transparent 36%,rgba(170,160,255,.10) 46%,rgba(255,210,235,.08) 52%,transparent 62%);filter:blur(10px)}
-#moon{position:absolute;left:50%;width:104px;height:104px;margin:-52px 0 0 -52px;border-radius:50%;
+#moon{position:absolute;left:50%;top:50%;width:104px;height:104px;margin:-52px 0 0 -52px;border-radius:50%;
   background:radial-gradient(circle at 42% 40%,#FFFDF4 0%,#F6EDD6 45%,#E8DCC0 70%,#D9CCAE 100%);
   box-shadow:0 0 40px 12px rgba(255,244,214,.35),0 0 140px 60px rgba(255,236,200,.16)}
 #moon:after{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 30% 60%,rgba(190,176,150,.35) 0 9%,transparent 10%),radial-gradient(circle at 62% 34%,rgba(190,176,150,.3) 0 7%,transparent 8%),radial-gradient(circle at 58% 70%,rgba(190,176,150,.25) 0 12%,transparent 13%)}
@@ -69,16 +69,17 @@ section{min-height:94vh;display:flex;flex-direction:column;justify-content:cente
 }
 /* scratch */
 .ticket{position:relative;width:min(100%,330px);aspect-ratio:1/1.08;margin:22px auto 8px;border-radius:999px 999px 24px 24px;overflow:hidden;
-  background:linear-gradient(180deg,rgba(255,246,238,.96),rgba(247,228,220,.96));color:#3A2A36;display:flex;flex-direction:column;justify-content:center;box-shadow:0 20px 50px rgba(10,8,30,.35)}
+  background:linear-gradient(180deg,rgba(255,246,238,.96),rgba(247,228,220,.96));color:#3A2A36;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-shadow:0 20px 50px rgba(10,8,30,.35)}
 .ticket .d1{font-family:var(--sans);letter-spacing:.3em;font-size:11px;text-transform:uppercase;color:#8A6A5A}
 .ticket .d2{font-family:var(--display);font-style:italic;font-size:74px;line-height:1;margin:10px 0}
 .ticket .d2 span{font-size:34px;color:#C9788A;margin:0 4px}
 .ticket canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;transition:opacity .9s}
 .linkbtn{font-family:var(--sans);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--champ);text-decoration:underline;text-underline-offset:5px;margin-top:12px;padding:8px}
-.cd{display:grid;grid-template-columns:repeat(4,1fr);width:100%;max-width:340px;margin-top:26px}
+.cd{display:grid;grid-template-columns:repeat(4,1fr);width:100%;max-width:340px;margin:26px auto 0;text-align:center}
 .cd div{padding:4px 0;border-left:1px solid rgba(235,211,176,.3)} .cd div:first-child{border-left:0}
 .cd b{display:block;font-family:var(--display);font-weight:400;font-size:38px;line-height:1.1}
 .cd small{font-family:var(--sans);font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--champ)}
+#date .it{display:block;width:100%;text-align:center}
 /* itinerary */
 .day{width:100%;margin-top:30px;text-align:left}
 .dayhead{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(235,211,176,.35)}
@@ -506,10 +507,9 @@ const stc=$('#stars'),dc=$('#dust'),fx=$('#fx');let DPR=1;
 const phone=matchMedia('(max-width:700px),(pointer:coarse)').matches;
 const R=rnd(3),stars=[...Array(phone?64:160)].map(()=>({x:R(),y:R()*.7,s:.4+R()*1.2,ph:R()*6,f:.5+R()*1.5}));
 const R2=rnd(9),dust=[...Array(phone?14:34)].map(()=>({x:R2(),y:R2(),s:.8+R2()*1.8,v:.01+R2()*.02,ph:R2()*6}));
-const ampEl=document.querySelector('#couple .amp'), milkyEl=$('#milky'), meadowEl=$('#meadow');
-let ampY=0, lastBr=-1, lastScrollT=0, tickN=0, P=0;
-function syncAmp(){const w=ampEl.getBoundingClientRect();ampY=w.top+w.height/2;}
-function resize(){DPR=canv(stc);canv(dc);canv(fx);if(window.fwc)canv(fwc);syncAmp();}
+const milkyEl=$('#milky'), meadowEl=$('#meadow');
+let lastBr=-1, lastScrollT=0, tickN=0, P=0;
+function resize(){DPR=canv(stc);canv(dc);canv(fx);if(window.fwc)canv(fwc);}
 addEventListener('resize',resize);resize();
 addEventListener('scroll',()=>{lastScrollT=performance.now();},{passive:true});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&frame.stopped){frame.stopped=0;requestAnimationFrame(frame);}});
@@ -524,7 +524,7 @@ function frame(ts){
  svg.style.opacity=S.m; svg.style.transform=`translateY(${(1-S.m)*vhh*.12}px)`; svg.style.visibility=S.m<.01?'hidden':'visible';
  sun.style.opacity=clamp((1.08-S.sun)/.3)*S.m;
  forest.style.opacity=S.f; forest.style.transform=`translateY(${(1-S.f)*vhh*.1}px)`; forest.style.visibility=S.f<.01?'hidden':'visible';
- if(S.f>0.01){if(!scrolling||!(tickN&3))syncAmp();moon.style.top=ampY+'px';} moon.style.opacity=clamp(S.f*1.4);
+ moon.style.opacity=clamp(S.f*1.4);
  city.style.opacity=S.c; city.style.transform=`translateY(${(1-S.c)*vhh*.1}px)`; city.style.visibility=S.c<.01?'hidden':'visible';
  if(ambient||S.c>0.05)drawFw(t,S.c);
  milkyEl.style.opacity=clamp(1-S.m-S.c*.6-S.r*.5);
