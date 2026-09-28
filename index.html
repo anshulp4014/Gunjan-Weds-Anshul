@@ -226,36 +226,27 @@ body.sealed .seal{display:none!important}
 .modes button{padding:9px 20px;border-radius:30px;font-family:var(--sans);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);transition:background .35s,color .35s}
 .modes button[aria-pressed="true"]{background:#FFF6EE;color:#3A2A36}
 .hgame{width:100%;display:flex;flex-direction:column;align-items:center}
-.hcard{position:relative;width:min(90%,316px);aspect-ratio:360/414;margin:20px auto 4px;border-radius:999px 999px 24px 24px;overflow:hidden;touch-action:none;
+.hcard{position:relative;width:min(84%,308px);aspect-ratio:360/414;margin:20px auto 4px;border-radius:999px 999px 24px 24px;overflow:hidden;
   background:radial-gradient(ellipse at 50% 38%,#FDF5EC,#F4E3D6 58%,#E7CFBD);box-shadow:0 22px 50px rgba(10,8,30,.42),0 0 0 1px rgba(235,211,176,.4),0 0 0 8px rgba(255,248,240,.07)}
-.hcard svg{position:absolute;inset:0;width:100%;height:100%;display:block}
-.hdimw{position:absolute;inset:0;opacity:.18}
-.hlitw{position:absolute;inset:0;
-  -webkit-mask-image:radial-gradient(circle var(--lr,110px) at var(--lx,50%) var(--ly,42%),#000 0 54%,rgba(0,0,0,.4) 78%,transparent 100%);
-  mask-image:radial-gradient(circle var(--lr,110px) at var(--lx,50%) var(--ly,42%),#000 0 54%,rgba(0,0,0,.4) 78%,transparent 100%);
-  transition:opacity .5s}
-.hshade{position:absolute;inset:0;pointer-events:none;transition:opacity .9s;
-  background:radial-gradient(circle var(--lr,110px) at var(--lx,50%) var(--ly,42%),rgba(255,201,131,.20) 0 40%,rgba(120,74,70,.14) 70%,rgba(82,48,56,.5) 100%)}
-.hring{position:absolute;left:var(--lx,50%);top:var(--ly,42%);width:calc(var(--lr,110px)*2);height:calc(var(--lr,110px)*2);
-  margin-left:calc(var(--lr,110px)*-1);margin-top:calc(var(--lr,110px)*-1);border-radius:50%;pointer-events:none;transition:opacity .9s;
-  box-shadow:inset 0 0 22px rgba(255,206,140,.35);border:1px solid rgba(255,214,160,.28)}
-.hgame.found .hcard{touch-action:auto;cursor:default}
-.hgame.found .hlitw{-webkit-mask-image:none;mask-image:none}
-.hgame.found .hshade,.hgame.found .hring{opacity:0}
-.hlitw .nmTxt{transition:fill .6s}
-.hgame.found .hlitw .nmTxt{fill:#A8761F;filter:drop-shadow(0 0 5px rgba(255,190,90,.95))}
-.hgame.found .hlitw .nmRing{opacity:1}
+.hcard svg,.hcard canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hcard canvas{pointer-events:none;transition:opacity .8s}
+.hgame.wipe .hcard{touch-action:none}
+.hgame.found .hcard{touch-action:auto}
+.hgame.found #hveil{opacity:0}
+.nmTxt{transition:fill .6s}
+.hgame.found .nmTxt{fill:#A8761F;filter:drop-shadow(0 0 5px rgba(255,190,90,.95))}
+.hgame.found .nmRing{opacity:1}
 .nmRing{opacity:0;transition:opacity .8s .2s}
-.hgame.warm .hlitw .nmTxt{animation:nmglow 1.6s ease-in-out infinite}
-@keyframes nmglow{0%,100%{fill:#7A3A22}50%{fill:#A15A2A}}
+.hfly{position:absolute;width:13px;height:13px;margin:-6.5px;border-radius:50%;pointer-events:none;z-index:2;
+  background:radial-gradient(circle,#FFF9E4 0 24%,rgba(255,214,140,.62) 52%,transparent 72%);
+  box-shadow:0 0 14px 5px rgba(255,200,120,.5);animation:hfp 1.9s ease-in-out infinite}
+.hfly.hintfly{opacity:0;transition:opacity 1.2s,left 2.4s ease-in-out,top 2.4s ease-in-out}
+.hfly.hintfly.on{opacity:1}
+@keyframes hfp{50%{transform:scale(1.3)}}
 .hshake{animation:hsh .45s}
 @keyframes hsh{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}45%{transform:translateX(6px)}70%{transform:translateX(-3px)}}
 .hbar{padding:0 16px;display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:10px;min-height:52px}
 .hstat{font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--champ);opacity:.9}
-.hfly{position:absolute;width:11px;height:11px;margin:-5.5px;border-radius:50%;pointer-events:none;opacity:0;transition:opacity 1.2s,left 2.6s ease-in-out,top 2.6s ease-in-out;
-  background:radial-gradient(circle,#FFF7DE 0 26%,rgba(255,212,130,.55) 55%,transparent 72%);box-shadow:0 0 12px 4px rgba(255,200,120,.55);animation:flyp 1.8s ease-in-out infinite}
-.hfly.on{opacity:1}
-@keyframes flyp{50%{transform:scale(1.35)}}
 .hfound{margin-top:14px;max-height:0;opacity:0;overflow:hidden;transition:max-height 1s cubic-bezier(.2,.7,.2,1),opacity .9s}
 .hfound.on{max-height:240px;opacity:1}
 .hname{font-family:var(--display);font-style:italic;font-size:clamp(44px,13vw,62px);line-height:1.05;margin:4px 0 2px;color:#FFEFC9;text-shadow:0 0 26px rgba(255,196,110,.55)}
@@ -263,8 +254,7 @@ body.sealed .seal{display:none!important}
 .hflip{position:absolute;margin:0;pointer-events:none;color:#FFEFC9;text-shadow:0 0 26px rgba(255,196,110,.55);white-space:nowrap;
   transition:transform 1.15s cubic-bezier(.2,.7,.2,1),opacity .5s}
 #relock{margin-top:6px}
-@supports not ((-webkit-mask-image:radial-gradient(#000,#000)) or (mask-image:radial-gradient(#000,#000))){ .hlitw{opacity:.5} .hshade,.hring{display:none} .hgame.found .hlitw{opacity:1} }
-@media (prefers-reduced-motion: reduce){ .hfly,.hshake,.hgame.warm .hlitw .nmTxt{animation:none} .hflip,.hfound{transition:none} }
+@media (prefers-reduced-motion: reduce){ .hfly,.hshake{animation:none} .hflip,.hfound{transition:none} }
 @media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none} #gate,.door{transition-duration:.01s} .tapring,.hand svg,.hand:before,.pill,.chevs i,.couple *,.couplePic,.couplePic *,.fimg{animation:none} }
 </style>
 </head>
@@ -336,7 +326,7 @@ if('scrollRestoration' in history) history.scrollRestoration='manual';
   <section id="mehndi" class="anchor"><div class="pane reveal">
     <p class="label">A little tradition</p>
     <h2 class="display" style="font-size:clamp(34px,10vw,44px);line-height:1.1;margin-top:8px">Her Mehndi</h2>
-    <p class="it small" id="hintro" style="margin-top:12px;max-width:330px;margin-left:auto;margin-right:auto">Her name is written somewhere in this henna. Carry the lamp across the pattern — and tap the name when you find it. The rest of the invitation opens with it.</p>
+    <p class="it small" id="hintro" style="margin-top:12px;max-width:330px;margin-left:auto;margin-right:auto">Her name is written somewhere in this henna. Find it, and the rest of the invitation opens with it.</p>
     <div class="modes" id="hmodes" role="group" aria-label="Choose difficulty">
       <button type="button" data-m="easy" aria-pressed="true">Easy</button>
       <button type="button" data-m="hard" aria-pressed="false">Hard</button>
@@ -348,13 +338,12 @@ if('scrollRestoration' in history) history.scrollRestoration='manual';
     </div>
     <div class="hgame" id="hgame">
       <div class="hcard" id="hcard" role="application" aria-label="Find the hidden name in the mehndi">
-        <div class="hdimw"><svg id="hdim" viewBox="0 0 360 414" aria-hidden="true"></svg></div>
-        <div class="hlitw"><svg id="hlit" viewBox="0 0 360 414" aria-hidden="true"></svg></div>
-        <div class="hshade"></div><div class="hring"></div>
-        <i class="hfly" id="hfly" aria-hidden="true"></i>
+        <svg id="hart" viewBox="0 0 360 414" aria-hidden="true"></svg>
+        <canvas id="hveil" aria-hidden="true"></canvas>
+        <i class="hfly hintfly" id="hfly" aria-hidden="true"></i>
       </div>
       <div class="hbar">
-        <span class="hstat" id="hstat">Move the lamp · then tap the name</span>
+        <span class="hstat" id="hstat">Tap the henna</span>
         <button class="linkbtn" id="hreveal" type="button" hidden>Show me where it is</button>
       </div>
     </div>
@@ -749,32 +738,24 @@ $('#map2').href='https://www.google.com/maps/search/?api=1&query='+encodeURIComp
 $('#wa').href='https://wa.me/918360747358?text='+encodeURIComponent("Namaste! 🙏 We'd love to be there for Gunjan & Anshul's wedding. Count us in!\nName: \nNumber of guests: ");
 $('#shareBtn').addEventListener('click',async()=>{const data={title:'Gunjan weds Anshul',text:'You are invited to the wedding of Gunjan & Anshul — 10–11 December 2026 💛',url:location.href};
  try{if(navigator.share){await navigator.share(data);}else{await navigator.clipboard.writeText(location.href);toast('Link copied');}}catch(e){}});
-/* ---------- mehndi name hunt ---------- */
+/* ---------- mehndi name hunt: Easy = fireflies, Hard = wipe the fog ---------- */
 (function(){
 const HG=$('#hgame'); if(!HG) return;
-const card=$('#hcard'),dimSvg=$('#hdim'),litSvg=$('#hlit'),fly=$('#hfly'),
+const card=$('#hcard'),art=$('#hart'),veil=$('#hveil'),hintFly=$('#hfly'),
       stat=$('#hstat'),revealBtn=$('#hreveal'),relockBtn=$('#relock'),foundBox=$('#hfound'),sec=$('#mehndi'),intro=$('#hintro');
 const INTRO=intro?intro.textContent:'';
 const GW=360,GH=414,MCX=180,MCY=266,MR=84,NAME='Gunjan';
-const H='#7A3A22',HD='#5A2714',HL='#9E5C3C';
+const H='#7A3A22',HD='#5A2714';
 const MODES={
- easy:{fs:19,motifs:175,clear:21,lampR:.30,hint:15000,reveal:30000,ring:true,vines:7,
-   decoys:[]},
- hard:{fs:13,motifs:365,clear:10,lampR:.19,hint:45000,reveal:90000,ring:false,vines:10,
+ easy:{play:'fly',flies:3,lit:72,fs:19,motifs:150,clear:22,vines:7,ring:true,hint:15000,reveal:30000,decoys:[]},
+ hard:{play:'wipe',brush:26,fs:13,motifs:340,clear:10,vines:10,ring:false,hint:45000,reveal:90000,
    decoys:['Gunja','Gungun','Gunjal','Anjan','Ranjan','Manjan','Ginni','Gunjika','Anjali','Kangan','Gunjni','Gunjar']}
 };
 const KEY={easy:'gwa-mehndi-easy',hard:'gwa-mehndi-hard'},MKEY='gwa-mehndi-mode';
 const ls=(f,d)=>{try{return f()}catch(e){return d}};
 let mode=ls(()=>localStorage.getItem(MKEY),null)||'easy'; if(!MODES[mode])mode='easy';
-let target=null,found=false,touchedIt=false,inView=false,hintT=0,revT=0,lamp={x:.5,y:.42},idleOn=false;
-
-
-/* ---- music: the song sits at 70%, and ducks to 30% while the name is being hunted ---- */
-function applyMix(){ if(!opened||music.paused)return;
- const hunt=!found&&inView&&!document.hidden;
- fadeVol(hunt?.3:.7,hunt?1200:1600);}
-music.addEventListener('play',applyMix);
-document.addEventListener('visibilitychange',applyMix);
+let cfg=MODES[mode],target=null,found=false,inView=false,hintT=0,revT=0,touchedIt=false;
+let flies=[],raf=0,maskC=null,DPRv=1,wiped=0,drawn=false;
 
 const f1=n=>(Math.round(n*10)/10);
 function insideCard(x,y,pad){ if(x<pad||x>GW-pad||y>GH-pad) return false;
@@ -790,14 +771,13 @@ const LEAF2=`<path d="M0 0C4 -6 14 -7 19 -1C13 5 4 6 0 0Z" fill="none" stroke="$
 const PAIS=`<path d="M0 0C-11 -5 -14 -21 -3 -27C7 -32 15 -22 10 -13C7 -7 2 -5 0 0Z" fill="none" stroke="${H}" stroke-width="1.3"/><path d="M0 -4.5C-7 -8.5 -8.5 -18 -2.5 -22" fill="none" stroke="${H}" stroke-width=".85"/><circle cx="-2" cy="-15" r="1.7" fill="${H}"/>`;
 const CURL=`<path d="M0 0C8 -2 13.5 -8 11.5 -14C9.5 -19.5 2 -19 1 -14C0 -9.5 5 -8 7.5 -11" fill="none" stroke="${H}" stroke-width="1.2" stroke-linecap="round"/>`;
 const PETAL=`<path d="M0 0C4.4 -5 4.4 -11.5 0 -15.5C-4.4 -11.5 -4.4 -5 0 0Z"`;
-function flower(n,r,fill,sw){let s='';for(let i=0;i<n;i++)s+=`<g transform="rotate(${f1(360/n*i)}) translate(0 ${-r})">${PETAL} fill="${fill?H:'none'}" stroke="${H}" stroke-width="${sw||.9}" opacity="${fill?.92:1}"/></g>`;
+function flower(n,r,fill,sw){let s='';for(let i=0;i<n;i++)s+=`<g transform="rotate(${f1(360/n*i)}) translate(0 ${-r})">${PETAL} fill="${fill?H:'none'}" stroke="${H}" stroke-width="${sw||.9}"/></g>`;
   return s+`<circle r="${f1(r*.42)}" fill="none" stroke="${H}" stroke-width=".9"/><circle r="${f1(r*.16)}" fill="${H}"/>`;}
 function bez(p,q,r,s,t){const u=1-t;return[u*u*u*p[0]+3*u*u*t*q[0]+3*u*t*t*r[0]+t*t*t*s[0],u*u*u*p[1]+3*u*u*t*q[1]+3*u*t*t*r[1]+t*t*t*s[1]];}
 
-/* ---- pattern builder (deterministic for a given seed) ---- */
-function buildPattern(m,seed,pfx){
- const cfg=MODES[m],r=rnd(seed||7),out=[];
- /* 1. border: scalloped arch + inner band */
+/* ---- the henna, built fresh for each game ---- */
+function buildPattern(seed){
+ const r=rnd(seed||7),out=[],pfx='n'+seed+'_';
  let bd='';
  for(let i=0;i<=56;i++){const a=Math.PI+Math.PI*(i/56),x=180+Math.cos(a)*165,y=180+Math.sin(a)*165;
    bd+=`<circle cx="${f1(x)}" cy="${f1(y)}" r="${i%2?1:1.9}" fill="${H}" opacity=".85"/>`;
@@ -806,40 +786,34 @@ function buildPattern(m,seed,pfx){
    bd+=G(x,y,a*180/Math.PI-90,.5,i%2?LEAF2:PAIS);}
  bd+=`<path d="M180 15A165 165 0 0 1 345 180" fill="none" stroke="${H}" stroke-width=".9" opacity=".55"/><path d="M15 180A165 165 0 0 1 180 15" fill="none" stroke="${H}" stroke-width=".9" opacity=".55"/>`;
  for(let y=184;y<GH-16;y+=12){bd+=`<circle cx="16" cy="${y}" r="1.7" fill="${H}" opacity=".8"/><circle cx="${GW-16}" cy="${y}" r="1.7" fill="${H}" opacity=".8"/>`;
-   if((y-184)%36===0){bd+=G(22,y,0,.42,LEAF)+G(GW-22,y,180,.42,LEAF);}}
+   if((y-184)%36===0)bd+=G(22,y,0,.42,LEAF)+G(GW-22,y,180,.42,LEAF);}
  for(let x=26;x<GW-22;x+=14){bd+=`<circle cx="${x}" cy="${GH-14}" r="1.7" fill="${H}" opacity=".75"/>`;
    if((x-26)%42===0)bd+=G(x,GH-22,-90,.42,LEAF);}
  bd+=`<path d="M17 ${GH-28}L17 184M${GW-17} ${GH-28}L${GW-17} 184" stroke="${H}" stroke-width=".8" opacity=".5" fill="none"/>`;
  out.push(`<g opacity=".95">${bd}</g>`);
- /* 2. rosette in the dome + main mandala */
  out.push(G(180,104,0,1,flower(8,13,true)+flower(14,27,false,.9)+flower(10,40,false,.75)));
  let ring='';
  for(let i=0;i<10;i++){const a=i/10*Math.PI*2;ring+=G(180+Math.cos(a)*50,104+Math.sin(a)*50,a*180/Math.PI+90,.4,LEAF);}
  out.push(ring);
- let md=G(MCX,MCY,0,1,flower(8,17,true)+flower(12,34,false,1)+flower(16,52,false,.8));
+ out.push(G(MCX,MCY,0,1,flower(8,17,true)+flower(12,34,false,1)+flower(16,52,false,.8)));
  let ring2='';
  for(let i=0;i<24;i++){const a=i/24*Math.PI*2;ring2+=`<circle cx="${f1(MCX+Math.cos(a)*64)}" cy="${f1(MCY+Math.sin(a)*64)}" r="1.8" fill="${H}"/>`;}
  for(let i=0;i<12;i++){const a=i/12*Math.PI*2;ring2+=G(MCX+Math.cos(a)*(MR-4),MCY+Math.sin(a)*(MR-4),a*180/Math.PI-90,.58,PAIS);}
- out.push(md+ring2);
- /* 3. vines radiating from the mandala */
- const nv=cfg.vines,vine=[];
- for(let i=0;i<nv;i++){const a=(i/nv)*Math.PI*2+r()*.45,p0=[MCX+Math.cos(a)*MR,MCY+Math.sin(a)*MR];
+ out.push(ring2);
+ const vine=[];
+ for(let i=0;i<cfg.vines;i++){const a=(i/cfg.vines)*Math.PI*2+r()*.45,p0=[MCX+Math.cos(a)*MR,MCY+Math.sin(a)*MR];
   let reach=MR+60+r()*90,p3=[MCX+Math.cos(a)*reach,MCY+Math.sin(a)*reach];
   while(reach>MR+24&&!insideCard(p3[0],p3[1],20)){reach-=10;p3=[MCX+Math.cos(a)*reach,MCY+Math.sin(a)*reach];}
   const p1=[p0[0]+(r()-.5)*80,p0[1]+(r()-.5)*80],p2=[p3[0]+(r()-.5)*90,p3[1]+(r()-.5)*90];
   vine.push(`<path d="M${f1(p0[0])} ${f1(p0[1])}C${f1(p1[0])} ${f1(p1[1])} ${f1(p2[0])} ${f1(p2[1])} ${f1(p3[0])} ${f1(p3[1])}" fill="none" stroke="${H}" stroke-width="1.1" opacity=".85"/>`);
   for(let k=1;k<9;k++){const t=k/9,pt=bez(p0,p1,p2,p3,t),nx=bez(p0,p1,p2,p3,Math.min(1,t+.05)),ang=Math.atan2(nx[1]-pt[1],nx[0]-pt[0])*180/Math.PI;
-   if(!insideCard(pt[0],pt[1],10))continue;
-   vine.push(G(pt[0],pt[1],ang+(k%2?-55:55),.4+r()*.2,k%3===0?LEAF2:LEAF));}
+   if(insideCard(pt[0],pt[1],10))vine.push(G(pt[0],pt[1],ang+(k%2?-55:55),.4+r()*.2,k%3===0?LEAF2:LEAF));}
   vine.push(G(p3[0],p3[1],r()*360,.45,CURL));}
- /* two vines linking the rosette down to the mandala */
- [[-1,1],[1,-1]].forEach((sg,i)=>{const p0=[180+sg[0]*40,132],p3=[MCX+sg[0]*62,MCY-58],
-   p1=[180+sg[0]*88,168],p2=[MCX+sg[1]*20,MCY-104];
+ [[-1,1],[1,-1]].forEach(sg=>{const p0=[180+sg[0]*40,132],p3=[MCX+sg[0]*62,MCY-58],p1=[180+sg[0]*88,168],p2=[MCX+sg[1]*20,MCY-104];
   vine.push(`<path d="M${p0[0]} ${p0[1]}C${p1[0]} ${p1[1]} ${p2[0]} ${p2[1]} ${p3[0]} ${p3[1]}" fill="none" stroke="${H}" stroke-width="1" opacity=".8"/>`);
   for(let k=1;k<7;k++){const t=k/7,pt=bez(p0,p1,p2,p3,t),nx=bez(p0,p1,p2,p3,Math.min(1,t+.05)),ang=Math.atan2(nx[1]-pt[1],nx[0]-pt[0])*180/Math.PI;
    vine.push(G(pt[0],pt[1],ang+(k%2?-58:58),.4,k%2?LEAF:LEAF2));}});
  out.push(vine.join(''));
- /* 4. the hidden name + decoys */
  const words=[];
  function place(txt,isT){
   const fs=cfg.fs,w=txt.length*fs*.47;
@@ -851,34 +825,28 @@ function buildPattern(m,seed,pfx){
    if(!insideCard(x-hx,y-hy,16)||!insideCard(x+hx,y+hy,16)||!insideCard(x,y,16))continue;
    let ok=true;for(const q of words)if(Math.hypot(x-q.x,y-q.y)<Math.max(44,fs*3.2)){ok=false;break;}
    if(!ok)continue;
-   const nx=-Math.sin(rad),ny=Math.cos(rad),sag=(r()<.5?1:-1)*(4+r()*7),
-         id=pfx+'np'+words.length;
-   const d=`M${f1(x-hx)} ${f1(y-hy)}Q${f1(x+nx*sag)} ${f1(y+ny*sag)} ${f1(x+hx)} ${f1(y+hy)}`;
-   words.push({txt,x,y,x1:x-hx,y1:y-hy,x2:x+hx,y2:y+hy,fs,isT});
-   let g=`<path id="${id}" d="${d}" fill="none" stroke="none"/>`+
+   const nx=-Math.sin(rad),ny=Math.cos(rad),sag=(r()<.5?1:-1)*(4+r()*7),id=pfx+words.length;
+   words.push({txt,x,y,x1:x-hx,y1:y-hy,x2:x+hx,y2:y+hy,fs});
+   let g=`<path id="${id}" d="M${f1(x-hx)} ${f1(y-hy)}Q${f1(x+nx*sag)} ${f1(y+ny*sag)} ${f1(x+hx)} ${f1(y+hy)}" fill="none" stroke="none"/>`+
      `<text ${isT?'class="nmTxt" ':''}font-family="Cormorant Garamond,Georgia,serif" font-style="italic" font-size="${fs}" fill="${H}" letter-spacing=".4"><textPath href="#${id}" startOffset="50%" text-anchor="middle">${txt}</textPath></text>`;
    if(isT&&cfg.ring){let rg='';for(let k=0;k<16;k++){const aa=k/16*Math.PI*2;
      rg+=`<circle cx="${f1(x+Math.cos(aa)*(w*.62+12))}" cy="${f1(y-fs*.3+Math.sin(aa)*(fs*1.5))}" r="1.5" fill="${H}"/>`;}
     g+=`<g opacity=".9" transform="rotate(${f1(a)} ${f1(x)} ${f1(y)})">${rg}</g>`;}
    if(isT)g+=`<g class="nmRing"><ellipse cx="${f1(x)}" cy="${f1(y-fs*.32)}" rx="${f1(w*.72+9)}" ry="${f1(fs*1.25)}" fill="none" stroke="#B8801F" stroke-width="1.2" stroke-dasharray="2 5" transform="rotate(${f1(a)} ${f1(x)} ${f1(y-fs*.32)})"/></g>`;
-   return g;
-  }
-  return '';
- }
+   return g;}
+  return '';}
  let wtxt='';cfg.decoys.forEach(d=>{wtxt+=place(d,false);});
  wtxt+=place(NAME,true);
  const tgt=words[words.length-1]||{x:180,y:120,x1:160,y1:120,x2:200,y2:120,fs:cfg.fs};
  out.push(wtxt);
- /* 5. a vine that runs past the name so it never sits on blank skin */
  {const side=r()<.5?1:-1,ang=Math.atan2(tgt.y2-tgt.y1,tgt.x2-tgt.x1),nx=-Math.sin(ang),ny=Math.cos(ang),
-   off=side*(tgt.fs*(m==='hard'?1.15:1.6)),
+   off=side*(tgt.fs*(cfg.play==='wipe'?1.15:1.6)),
    a0=[tgt.x1-26*Math.cos(ang)+nx*off,tgt.y1-26*Math.sin(ang)+ny*off],
    a3=[tgt.x2+26*Math.cos(ang)+nx*off,tgt.y2+26*Math.sin(ang)+ny*off];
   let vv=`<path d="M${f1(a0[0])} ${f1(a0[1])}Q${f1(tgt.x+nx*off*1.8)} ${f1(tgt.y+ny*off*1.8)} ${f1(a3[0])} ${f1(a3[1])}" fill="none" stroke="${H}" stroke-width="1" opacity=".8"/>`;
   for(let k=0;k<6;k++){const t=k/5,pt=[a0[0]+(a3[0]-a0[0])*t,a0[1]+(a3[1]-a0[1])*t+ny*off*.9*Math.sin(Math.PI*t)];
    if(insideCard(pt[0],pt[1],10))vv+=G(pt[0],pt[1],ang*180/Math.PI+(k%2?-60:60)+(side<0?180:0),.36,k%2?LEAF:LEAF2);}
   out.push(vv);}
- /* 6. filler motifs, kept clear of the name itself */
  let fl='';
  for(let i=0,n=0;i<4200&&n<cfg.motifs;i++){
   const x=r()*GW,y=r()*GH,a=r()*360,s=.32+r()*.5,k=r();
@@ -889,73 +857,144 @@ function buildPattern(m,seed,pfx){
   fl+=G(x,y,a,s,k<.28?LEAF:k<.5?LEAF2:k<.66?CURL:k<.78?PAIS:k<.92?flower(6,7,r()<.5):`<circle r="2.1" fill="${H}"/><circle cx="7" cy="2" r="1.3" fill="${H}"/><circle cx="-6" cy="3" r="1.3" fill="${H}"/>`);
   n++;}
  out.push(fl);
- return {svg:out.join(''),target:tgt};
+ art.innerHTML=out.join('');
+ return tgt;
 }
 
-/* ---- build / rebuild ---- */
-function newGame(){
- const seed=Math.floor(Math.random()*99999)+11;
- const a=buildPattern(mode,seed,'d'),b=buildPattern(mode,seed,'l');
- dimSvg.innerHTML=a.svg; litSvg.innerHTML=b.svg; target=b.target;
- HG.classList.remove('found','warm'); foundBox.classList.remove('on');
- found=false; touchedIt=false;
- revealBtn.hidden=true; relockBtn.hidden=true; $('#hmodes').hidden=false;
- fly.classList.remove('on');
- stat.textContent=reduce?'Tap her name in the henna':'Move the lamp · then tap the name';
- if(intro)intro.textContent=INTRO;
- lamp={x:.5,y:.42}; applyLamp();
- clearTimeout(hintT); clearTimeout(revT);
- hintT=setTimeout(showHint,MODES[mode].hint);
- revT=setTimeout(()=>{revealBtn.hidden=false;},MODES[mode].reveal);
- startIdle(); applyMix();
-}
-function applyLamp(){
- const w=card.clientWidth||300,h=card.clientHeight||345,R=reduce?w*.62:w*MODES[mode].lampR;
- card.style.setProperty('--lx',(lamp.x*w).toFixed(1)+'px');
- card.style.setProperty('--ly',(lamp.y*h).toFixed(1)+'px');
- card.style.setProperty('--lr',R.toFixed(1)+'px');
- if(!found&&MODES[mode].ring&&target){
-  const near=Math.hypot(lamp.x*GW-target.x,lamp.y*GH-target.y)<(R/w*GW)*.8;
-  HG.classList.toggle('warm',near);
+/* ---- the veil: fog over the henna, cleared by fireflies or by a finger ---- */
+function sizeVeil(){
+ const w=card.clientWidth,h=card.clientHeight; if(!w||!h)return;
+ DPRv=Math.min(2,devicePixelRatio||1);
+ const nw=Math.round(w*DPRv),nh=Math.round(h*DPRv);
+ if(veil.width!==nw||veil.height!==nh){
+  const old=maskC;
+  veil.width=nw;veil.height=nh;
+  maskC=document.createElement('canvas');maskC.width=nw;maskC.height=nh;
+  if(old&&old.width)maskC.getContext('2d').drawImage(old,0,0,nw,nh);
  }
+ drawVeil();
 }
-addEventListener('resize',applyLamp);
-function startIdle(){ if(reduce||found||touchedIt||idleOn)return; idleOn=true; requestAnimationFrame(idleLoop); }
-function idleLoop(ts){
- if(found||touchedIt){idleOn=false;return;}
- if(!document.hidden&&inView){const t=ts/1000;
-  lamp.x=.5+Math.sin(t*.44)*.25; lamp.y=.46+Math.sin(t*.61+1.1)*.23; applyLamp();}
- requestAnimationFrame(idleLoop);
+addEventListener('resize',sizeVeil);
+function drawVeil(){
+ if(!veil.width)return;
+ const c=veil.getContext('2d'),W=veil.width,Hh=veil.height;
+ c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,W,Hh);
+ if(found)return;
+ c.fillStyle='rgba(246,231,218,.94)';c.fillRect(0,0,W,Hh);
+ c.globalCompositeOperation='destination-out';
+ if(cfg.play==='wipe'){ if(maskC)c.drawImage(maskC,0,0); }
+ else{ flies.forEach(f=>{const x=f.x/GW*W,y=f.y/GH*Hh,r=cfg.lit/GW*W;
+   const g=c.createRadialGradient(x,y,0,x,y,r);
+   g.addColorStop(0,'rgba(0,0,0,1)');g.addColorStop(.6,'rgba(0,0,0,1)');g.addColorStop(1,'rgba(0,0,0,0)');
+   c.fillStyle=g;c.beginPath();c.arc(x,y,r,0,6.283);c.fill();}); }
+ c.globalCompositeOperation='source-over';
+ if(cfg.play!=='wipe')flies.forEach(f=>{const x=f.x/GW*W,y=f.y/GH*Hh,r=cfg.lit/GW*W*1.1;
+   const g=c.createRadialGradient(x,y,0,x,y,r);
+   g.addColorStop(0,'rgba(255,196,110,.16)');g.addColorStop(1,'rgba(255,196,110,0)');
+   c.fillStyle=g;c.beginPath();c.arc(x,y,r,0,6.283);c.fill();});
+ drawn=true;
 }
-new IntersectionObserver(es=>es.forEach(e=>{inView=e.isIntersecting;applyMix();}),{threshold:.12}).observe(card);
+function wipeAt(x,y,px,py){
+ if(!maskC)return;
+ const c=maskC.getContext('2d'),W=maskC.width,Hh=maskC.height,
+   sx=x/GW*W,sy=y/GH*Hh,r=cfg.brush/GW*W;
+ c.strokeStyle='#000';c.fillStyle='#000';c.lineCap='round';c.lineJoin='round';c.lineWidth=r*2;
+ c.beginPath();c.moveTo(px==null?sx:px/GW*W,py==null?sy:py/GH*Hh);c.lineTo(sx,sy);c.stroke();
+ c.beginPath();c.arc(sx,sy,r,0,6.283);c.fill();
+ wiped++;drawVeil();
+}
 
-/* ---- hint firefly ---- */
-function showHint(){ if(found||!target)return;
- fly.style.left=(target.x/GW*100)+'%'; fly.style.top=(target.y/GH*100)+'%';
- fly.classList.add('on');
- stat.textContent='The firefly is resting on it';
+/* ---- fireflies (easy) ---- */
+function flyLoop(ts){
+ if(cfg.play!=='fly'||found){raf=0;return;}
+ if(document.hidden||!inView){raf=requestAnimationFrame(flyLoop);return;}
+ const t=ts/1000;
+ flies.forEach((f,i)=>{
+  if(f.tx!=null){f.x+=(f.tx-f.x)*.06;f.y+=(f.ty-f.y)*.06;
+   f.x+=Math.sin(t*1.7+i)*.22;f.y+=Math.cos(t*1.5+i*2)*.22;}
+  else{f.x=f.bx+Math.sin(t*.42+f.ph)*52;f.y=f.by+Math.sin(t*.55+f.ph*2)*46;}
+  f.el.style.left=(f.x/GW*100)+'%';f.el.style.top=(f.y/GH*100)+'%';});
+ drawVeil();raf=requestAnimationFrame(flyLoop);
 }
+function startFlies(){ if(!raf&&cfg.play==='fly'&&!found)raf=requestAnimationFrame(flyLoop); }
+function warmth(x,y){
+ if(cfg.play!=='fly'||!target)return;
+ const w=Math.max(0,1-Math.hypot(x-target.x,y-target.y)/150);
+ flies.forEach(f=>{
+  f.el.style.background='radial-gradient(circle,#FFF9E4 0 24%,rgba(255,'+Math.round(214-56*w)+','+Math.round(140-86*w)+',.72) 52%,transparent 72%)';
+  f.el.style.boxShadow='0 0 '+(14+18*w).toFixed(0)+'px '+(5+5*w).toFixed(0)+'px rgba(255,'+Math.round(200-70*w)+',120,'+(.5+.35*w).toFixed(2)+')';
+  f.el.style.animationDuration=(1.9-1.15*w).toFixed(2)+'s';});
+}
+
+/* ---- a new game ---- */
+function newGame(){
+ cfg=MODES[mode];
+ if(raf){cancelAnimationFrame(raf);raf=0;}
+ found=false;touchedIt=false;wiped=0;
+ HG.classList.remove('found');HG.classList.toggle('wipe',cfg.play==='wipe');
+ foundBox.classList.remove('on');hintFly.classList.remove('on');
+ revealBtn.hidden=true;relockBtn.hidden=true;$('#hmodes').hidden=false;
+ if(intro)intro.textContent=INTRO;
+ [...card.querySelectorAll('.hfly:not(.hintfly)')].forEach(e=>e.remove());
+ flies=[];
+ target=buildPattern(Math.floor(Math.random()*99999)+11);
+ if(cfg.play==='fly'){
+  for(let i=0;i<cfg.flies;i++){const el=document.createElement('i');el.className='hfly';card.appendChild(el);
+   flies.push({el,x:90+i*90,y:140+i*70,bx:90+i*90,by:150+i*80,ph:i*2.1,tx:null,ty:null});}
+  stat.textContent=reduce?'Tap her name in the henna':'Tap where the fireflies should look';
+ }else{
+  if(maskC)maskC.getContext('2d').clearRect(0,0,maskC.width,maskC.height);
+  stat.textContent=reduce?'Tap her name in the henna':'Wipe the mist away with your finger';
+ }
+ sizeVeil();startFlies();
+ clearTimeout(hintT);clearTimeout(revT);
+ hintT=setTimeout(showHint,cfg.hint);
+ revT=setTimeout(()=>{revealBtn.hidden=false;},cfg.reveal);
+ applyMix();
+}
+new IntersectionObserver(es=>es.forEach(e=>{inView=e.isIntersecting;applyMix();if(inView){sizeVeil();startFlies();}}),{threshold:.12}).observe(card);
+function showHint(){ if(found||!target)return;
+ hintFly.style.left=(target.x/GW*100)+'%';hintFly.style.top=(target.y/GH*100)+'%';
+ hintFly.classList.add('on');
+ stat.textContent='A firefly is resting on it';}
 
 /* ---- pointer ---- */
-let pd=null;
-function local(e){const b=card.getBoundingClientRect();return{x:(e.clientX-b.left)/b.width,y:(e.clientY-b.top)/b.height};}
-card.addEventListener('pointerdown',e=>{ if(found)return; pd={x:e.clientX,y:e.clientY,t:performance.now()};
- touchedIt=true; const p=local(e); lamp=p; applyLamp(); card.setPointerCapture(e.pointerId); });
-card.addEventListener('pointermove',e=>{ if(found)return;
- if(pd||e.pointerType==='mouse'){ touchedIt=true; lamp=local(e); applyLamp(); } });
+let pd=null,lastP=null;
+function local(e){const b=card.getBoundingClientRect();return{x:(e.clientX-b.left)/b.width*GW,y:(e.clientY-b.top)/b.height*GH};}
+card.addEventListener('pointerdown',e=>{ if(found)return; touchedIt=true;
+ pd={x:e.clientX,y:e.clientY,t:performance.now()};
+ const p=local(e); lastP=p;
+ if(cfg.play==='wipe'){ try{card.setPointerCapture(e.pointerId);}catch(err){} wipeAt(p.x,p.y,null,null); }
+});
+card.addEventListener('pointermove',e=>{ if(found||cfg.play!=='wipe'||!pd)return;
+ const p=local(e); wipeAt(p.x,p.y,lastP?lastP.x:null,lastP?lastP.y:null); lastP=p;
+ e.preventDefault();
+},{passive:false});
 card.addEventListener('pointerup',e=>{ if(found||!pd)return;
- const moved=Math.hypot(e.clientX-pd.x,e.clientY-pd.y),dt=performance.now()-pd.t; pd=null;
- if(moved<12&&dt<700) tryHit(local(e)); });
-card.addEventListener('pointercancel',()=>{pd=null;});
-function tryHit(p){
+ const moved=Math.hypot(e.clientX-pd.x,e.clientY-pd.y),dt=performance.now()-pd.t; pd=null;lastP=null;
+ if(moved<12&&dt<800) tap(local(e));
+});
+card.addEventListener('pointercancel',()=>{pd=null;lastP=null;});
+function tap(p){
  if(!target)return;
- const x=p.x*GW,y=p.y*GH;
- if(segDist(x,y,target.x1,target.y1,target.x2,target.y2)<target.fs*.95){ win(true); return; }
+ if(segDist(p.x,p.y,target.x1,target.y1,target.x2,target.y2)<target.fs*.95){ win(true); return; }
+ if(cfg.play==='fly'){
+  flies.map(f=>({f,d:Math.hypot(f.x-p.x,f.y-p.y)})).sort((a,b)=>a.d-b.d).slice(0,Math.max(1,flies.length-1))
+   .forEach((o,i)=>{o.f.tx=p.x+(i?(i%2?34:-34):0);o.f.ty=p.y+(i?(i%2?22:-18):0);});
+  warmth(p.x,p.y);startFlies();
+ }
  card.classList.remove('hshake'); void card.offsetWidth; card.classList.add('hshake');
  setTimeout(()=>card.classList.remove('hshake'),500);
  if(navigator.vibrate)navigator.vibrate(12);
- stat.textContent=Math.hypot(x-target.x,y-target.y)<70?'Very close — look again':'Not this one — keep looking';
+ stat.textContent=Math.hypot(p.x-target.x,p.y-target.y)<70?'Very close — look again':'Not this one — keep looking';
 }
+
+/* ---- music: 70% normally, 30% while the name is being hunted ---- */
+function applyMix(){ if(!opened||music.paused)return;
+ const hunt=!found&&inView&&!document.hidden;
+ fadeVol(hunt?.3:.7,hunt?1200:1600);}
+music.addEventListener('play',applyMix);
+document.addEventListener('visibilitychange',applyMix);
 
 /* ---- chime ---- */
 function chime(){ try{const A=new (window.AudioContext||window.webkitAudioContext)();
@@ -968,11 +1007,14 @@ function chime(){ try{const A=new (window.AudioContext||window.webkitAudioContex
 function win(fresh){
  if(found)return; found=true; pd=null;
  clearTimeout(hintT); clearTimeout(revT);
- fly.classList.remove('on'); revealBtn.hidden=true; $('#hmodes').hidden=true;
- HG.classList.remove('warm'); HG.classList.add('found'); applyMix();
- applyLamp(); ls(()=>localStorage.setItem(KEY[mode],'1'));
+ if(raf){cancelAnimationFrame(raf);raf=0;}
+ hintFly.classList.remove('on'); revealBtn.hidden=true; $('#hmodes').hidden=true;
+ HG.classList.add('found'); HG.classList.remove('wipe');
+ [...card.querySelectorAll('.hfly:not(.hintfly)')].forEach(e=>e.style.opacity=0);
+ drawVeil(); ls(()=>localStorage.setItem(KEY[mode],'1'));
  relockBtn.hidden=false; foundBox.classList.add('on');
  if(intro)intro.textContent='Her name is lit in gold below — and the rest of the invitation is open.';
+ applyMix();
  if(!fresh||reduce){ stat.textContent='Her name was here all along'; unseal(); return; }
  stat.textContent='Found her';
  chime(); if(navigator.vibrate)navigator.vibrate([18,50,26]);
@@ -985,14 +1027,14 @@ function win(fresh){
 function liftName(){
  const nameEl=$('#hname'); let clone=null;
  try{
+  const over=$('#hflyover'); if(!over)throw new Error('no overlay');
   const b=card.getBoundingClientRect();
   const sx=b.left+b.width*(target.x/GW), sy=b.top+b.height*(target.y/GH);
-  const over=$('#hflyover'); if(!over)throw new Error('no overlay');
   clone=document.createElement('h2'); clone.className='display hname hflip'; clone.textContent=NAME;
   clone.style.transition='none'; clone.style.left='0px'; clone.style.top='0px';
   over.appendChild(clone);
   const cr=clone.getBoundingClientRect();
-  if(!cr.height){throw new Error('no box');}
+  if(!cr.height)throw new Error('no box');
   nameEl.style.visibility='hidden';
   const ccx=cr.left+cr.width/2, ccy=cr.top+cr.height/2;
   const s0=Math.max(.1,(b.height*(target.fs/GH)*1.55)/cr.height);
@@ -1002,8 +1044,7 @@ function liftName(){
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
    const tr=nameEl.getBoundingClientRect();
    clone.style.transform='translate('+(tr.left+tr.width/2-ccx).toFixed(1)+'px,'+(tr.top+tr.height/2-ccy).toFixed(1)+'px) scale(1)';
-   clone.style.opacity='1';
-  }));
+   clone.style.opacity='1';}));
   setTimeout(()=>{ nameEl.style.visibility=''; if(clone&&clone.parentNode)clone.remove(); },1450);
  }catch(err){ nameEl.style.visibility=''; if(clone&&clone.parentNode)clone.remove(); }
 }
@@ -1012,9 +1053,7 @@ function liftName(){
 function unseal(){ document.body.classList.remove('sealed'); AN=[]; jkey=''; jkey2=''; }
 function seal(){ document.body.classList.add('sealed'); AN=[]; jkey=''; jkey2=''; }
 
-revealBtn.addEventListener('click',()=>{ if(found)return;
- win(false); toast('Unlocked — the rest of the card is open'); });
-
+revealBtn.addEventListener('click',()=>{ if(found)return; win(false); toast('Unlocked — the rest of the card is open'); });
 relockBtn.addEventListener('click',()=>{
  ls(()=>{localStorage.removeItem(KEY.easy);localStorage.removeItem(KEY.hard);});
  $('#hname').style.visibility='';
@@ -1022,18 +1061,16 @@ relockBtn.addEventListener('click',()=>{
  requestAnimationFrame(()=>sec.scrollIntoView({behavior:'smooth',block:'start'}));
  toast('Hidden again — find her name');
 });
-
 [...document.querySelectorAll('#hmodes button')].forEach(b=>b.addEventListener('click',()=>{
  const m=b.dataset.m; if(m===mode||found)return; mode=m; ls(()=>localStorage.setItem(MKEY,m));
  [...document.querySelectorAll('#hmodes button')].forEach(x=>x.setAttribute('aria-pressed',x.dataset.m===m?'true':'false'));
- newGame();
-}));
+ newGame();}));
 
-/* ---- boot ---- */
 [...document.querySelectorAll('#hmodes button')].forEach(x=>x.setAttribute('aria-pressed',x.dataset.m===mode?'true':'false'));
 newGame();
-if(ls(()=>localStorage.getItem(KEY.easy)||localStorage.getItem(KEY.hard),null)){ win(false); }
-document.fonts&&document.fonts.ready.then(applyLamp);
+if(ls(()=>localStorage.getItem(KEY.easy)||localStorage.getItem(KEY.hard),null)) win(false);
+document.fonts&&document.fonts.ready.then(sizeVeil);
+addEventListener('load',sizeVeil);
 })();
 })();
 </script>
