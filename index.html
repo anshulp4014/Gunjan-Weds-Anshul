@@ -364,8 +364,8 @@
         filter: none
       }
 
-      /* sections were ~1 viewport each — dead air on phone; keep desktop 94vh */
-      section {
+      /* RSVP & content sections: drop ~1-viewport dead air. Leave .jsec/.thread alone. */
+      section:not(.jsec):not(.thread) {
         min-height: 0;
         padding: 40px 0
       }
@@ -803,22 +803,6 @@
       align-items: center;
       justify-content: center;
       padding-left: 70px
-    }
-
-    /* after #ludhiana/#barsar/.jgap so these win on phone */
-    @media (max-width:700px),
-    (pointer:coarse) {
-      #ludhiana {
-        padding-top: 48px
-      }
-
-      #barsar {
-        padding-bottom: 48px
-      }
-
-      .jgap {
-        height: 110px
-      }
     }
 
     .jline {
