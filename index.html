@@ -1403,7 +1403,9 @@
       background: radial-gradient(ellipse at 50% 38%, #FFF9F2 0%, #F4E9DC 45%, #E6D5C3 100%);
       color: #3A2A36;
       transform-origin: 50% 40%;
-      transition: transform 1.6s cubic-bezier(.6, 0, .3, 1), opacity 1.1s ease .6s
+      /* opacity was delayed .6s vs scale — felt stuck, then a pop into #scene */
+      transition: transform 1.45s cubic-bezier(.4, 0, .2, 1), opacity 1.45s cubic-bezier(.4, 0, .2, 1);
+      will-change: transform, opacity
     }
 
     #gate:before {
@@ -2193,7 +2195,9 @@
       })();
       /* ---------- gate ---------- */
       const gate = $('#gate'), music = $('#music'), mBtn = $('#musicBtn');
-      const styles = ['sage', 'dusk', 'blush'], names = { sage: 'Sage', dusk: 'Dusk blue', blush: 'Blush' }; let si = 0; $('#styleBtn').addEventListener('click', e => { e.stopPropagation(); gate.classList.remove(styles[si]); si = (si + 1) % 3; gate.classList.add(styles[si]); $('#styleName').textContent = names[styles[si]]; });
+      const styles = ['sage', 'dusk', 'blush'], names = { sage: 'Sage', dusk: 'Dusk blue', blush: 'Blush' }; let si = 0;
+      const styleBtn = $('#styleBtn');
+      if (styleBtn) styleBtn.addEventListener('click', e => { e.stopPropagation(); gate.classList.remove(styles[si]); si = (si + 1) % 3; gate.classList.add(styles[si]); $('#styleName').textContent = names[styles[si]]; });
       $('#hint').addEventListener('click', () => scrollTo({ top: innerHeight * .9, behavior: 'smooth' }));
       let nudges = 0, touched = false, nudging = false;['touchstart', 'wheel', 'keydown', 'pointerdown'].forEach(ev => addEventListener(ev, () => { touched = true; }, { passive: true }));
       function nudge() {
@@ -2210,8 +2214,10 @@
         let entered = false;
         const enter = () => {
           if (entered) return; entered = true; clearTimeout(holdT); gate.classList.remove('hold');
-          gate.classList.add('gone'); document.body.classList.remove('locked');
-          setTimeout(() => { gate.remove(); $('#shareBtn').hidden = false; $('#rail').classList.add('on'); observe(); if (scrollY < 40) { hint.classList.add('on'); touched = false; setTimeout(nudge, 500); } }, reduce ? 150 : 1600);
+          gate.classList.add('gone');
+          // unlock after zoom has started so scroll/layout don't hitch mid-handoff
+          setTimeout(() => document.body.classList.remove('locked'), reduce ? 0 : 280);
+          setTimeout(() => { gate.remove(); gate.style.willChange = 'auto'; $('#shareBtn').hidden = false; $('#rail').classList.add('on'); observe(); if (scrollY < 40) { hint.classList.add('on'); touched = false; setTimeout(nudge, 500); } }, reduce ? 150 : 1500);
         };
         const holdT = setTimeout(enter, reduce ? 50 : 3000);
         // after the doors finish opening, a tap anywhere skips the monogram
@@ -2376,7 +2382,7 @@
         const S = sceneAt(scrollY);
         sky.style.background = `linear-gradient(${S.top} 0%, ${S.mid} 50%, ${S.bot} 74%)`;
         const vh = innerHeight, vhh = vh; sun.style.top = (S.sun * vh - 0.7 * Math.max(innerWidth, vh)) + 'px';
-        if (Math.abs(S.br - lastBr) > 0.025) { lastBr = S.br; svg.style.filter = `brightness(${S.br}) saturate(${lerp(.8, 1.12, clamp((S.br - .5) / .55))})`; }
+        if (Math.abs(S.br - lastBr) > 0.008) { lastBr = S.br; svg.style.filter = `brightness(${S.br}) saturate(${lerp(.8, 1.12, clamp((S.br - .5) / .55))})`; }
         svg.style.opacity = S.m; svg.style.transform = `translateY(${(1 - S.m) * vhh * .12}px)`; svg.style.visibility = S.m < .01 ? 'hidden' : 'visible';
         sun.style.opacity = clamp((1.08 - S.sun) / .3) * S.m;
         forest.style.opacity = S.f; forest.style.transform = `translateY(${(1 - S.f) * vhh * .1}px)`; forest.style.visibility = S.f < .01 ? 'hidden' : 'visible';
